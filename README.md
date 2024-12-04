@@ -1,3 +1,3 @@
-# template-ruby
+# cli playlist
 
 [ADD DESCRIPTION HERE]

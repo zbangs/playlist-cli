@@ -1,6 +1,6 @@
 #--- includes ---#
 require 'minitest/autorun'
-require './default.rb'
+require './lib/cli_playlist'
 
 #--- classes ---#
 class TestClass < MiniTest::Test
