@@ -41,7 +41,7 @@ module Playlist
   end
 
   def user_inp 
-    gets.chomp.strip.downcase
+    gets.chomp.downcase.strip
   end
 
   # Fetches and displays current playlist for user 

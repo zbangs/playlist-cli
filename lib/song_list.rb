@@ -9,8 +9,12 @@ class SongList < Array
 
 
   def add_song(title, artist, album="")
+    if title.empty? || artist.empty?
+      puts "Input error: title and/or artist empty"
+      return 1
+    end
+    
     duplicate = false
-
     self.each do |song|  
       if song.title == title && song.artist == artist
         duplicate = true

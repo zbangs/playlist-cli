@@ -22,6 +22,8 @@ class TestSongList < Minitest::Test
   end
 
   def test_song_deleted
+    @list.add_song("YOU'RE THE ONE", "Kaytranada", "99.9%")
+    @list.add_song("River", "LEON BRIDGES")
     assert_equal 0, @list.delete_song("river", "leon bridges")
     assert_equal 0, @list.delete_song("you're the one", "kaytranada")
   end
