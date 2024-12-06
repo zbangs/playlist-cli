@@ -7,35 +7,38 @@ class SongList < Array
     @list = list
   end
 
-  # add a new song to the playlist
+
   def add_song(title, artist, album="")
-    duplicate = @list.each do |song|  
+    duplicate = false
+
+    self.each do |song|  
       if song.title == title && song.artist == artist
-        true
+        duplicate = true
       end
     end
 
     unless duplicate
       song = Song.new(title, artist, album)
-      @list.push(song)
+      self.push(song)
       return 0
-    else
+    else 
       return 1
     end
 
-    return -1
   end
 
-  # remove an existing song from the playlist
+
   def delete_song(title, artist)
-    found = @list.each do |song|  
+    deleted = false
+    
+    self.each do |song|  
       if song.title == title && song.artist == artist
-        true
+        self.delete(song)
+        deleted = true
       end
     end
 
-    if found
-      @list.delete(song) 
+    if deleted
       return 0
     else
       return 1

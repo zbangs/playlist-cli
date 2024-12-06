@@ -1,15 +1,16 @@
-#--- includes ---#
 require 'yaml'
 require 'shellwords'
 require 'date'
+
 require './lib/song_list'
 require './lib/song'
+
 
 module Playlist
   module_function
   def main_menu
     # start of user interaction
-    playlist = SongList.new
+    @playlist = SongList.new
 
     loop do
       puts "\n" + YAML::load(<<-EOM)
@@ -45,17 +46,15 @@ module Playlist
 
   # Fetches and displays current playlist for user 
   def view
-    list = SongList.list
-
-    unless list.empty?
+    unless @playlist.empty?
       puts "\n— — — — — — — — — — — — — — — — — — — — — — —"
       puts "|  title  |  artist  |  album  |  date added "
       puts "— — — — — — — — — — — — — — — — — — — — — — —"
-      list.each do |song| 
+      @playlist.each do |song| 
         puts %Q{| "#{song.title}"  |  #{song.artist}  |  #{song.album}  |  #{song.date_added}"}
       end
       puts "— — — — — — — — — — — — — — — — — — — — — — —\n"
-      puts "count: #{list.count.to_s} songs in list."
+      puts "count: #{@playlist.count.to_s} songs in list."
     else
       puts "\n[empty]"
     end
@@ -67,11 +66,11 @@ module Playlist
     
     loop do
       puts "\n> Title: "
-      title = Playlist.user_inp
+      title = user_inp
       puts "> Artist: "
-      artist = Playlist.user_inp
+      artist = user_inp
       puts "> Album: "
-      album = Playlist.user_inp
+      album = user_inp
 
       unless title.empty? || artist.empty?
         break
@@ -80,27 +79,26 @@ module Playlist
       end
     end
 
-    exit_code = SongList.add_song(title, artist, album)
+    exit_code = @playlist.add_song(title, artist, album)
 
     if exit_code == 0
-      puts "\n-- #{add_title} by #{add_artist} added to playlist on #{song.date_added}"
+      puts "\n-- #{title} by #{artist} added to playlist."
     elsif exit_code == 1
       puts "\n[!] Song already exists!"
     else
       puts "\n[!] Unknown error occurred"
     end
-
   end
 
   # Removes song from playlist matching details provided by user
   def delete
     title=""; artist=""; album=""
-    
+
     loop do
       puts "\n> Title: "
-      title = Playlist.user_inp
+      title = user_inp
       puts "> Artist: "
-      artist = Playlist.user_inp
+      artist = user_inp
       
       unless title.empty? || artist.empty?
         break
@@ -109,10 +107,10 @@ module Playlist
       end
     end
     
-    exit_code == SongList.delete_song(title, artist)
+    exit_code = @playlist.delete_song(title, artist)
     
     if exit_code == 0
-      puts "\n-- #{add_title} by #{add_artist} deleted from playlist."
+      puts "\n-- #{title} by #{artist} deleted from playlist."
     elsif exit_code == 1
       puts "\n[!] Song not found!"
     else

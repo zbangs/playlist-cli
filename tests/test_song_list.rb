@@ -22,14 +22,14 @@ class TestSongList < Minitest::Test
   end
 
   def test_song_deleted
-    assert_equal 0, @list.delete("river", "leon bridges")
-    assert_equal 0, @list.delete("you're the one", "kaytranada")
+    assert_equal 0, @list.delete_song("river", "leon bridges")
+    assert_equal 0, @list.delete_song("you're the one", "kaytranada")
   end
 
   def test_song_not_deleted
-    assert_equal 1, @list.delete("plastic", "moses sumney")
-    assert_equal 1, @list.delete("ivy", "")
-    assert_equal 1, @list.delete("", "river tiber")
+    assert_equal 1, @list.delete_song("plastic", "moses sumney")
+    assert_equal 1, @list.delete_song("ivy", "")
+    assert_equal 1, @list.delete_song("", "river tiber")
   end
 
 end
