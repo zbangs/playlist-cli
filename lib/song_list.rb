@@ -27,7 +27,7 @@ class SongList < Array
   end
 
   # remove an existing song from the playlist
-  def delete_song(title, artist, album = nil)
+  def delete_song(title, artist)
     found = @list.each do |song|  
       if song.title == title && song.artist == artist
         true
