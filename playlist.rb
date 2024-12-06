@@ -25,11 +25,11 @@ module Playlist
 
       case argv[0]
       when 'v', 'view'
-        puts playlist.view_list
+        puts view
       when 'a', 'add'
-        puts playlist.add_song
+        puts add
       when 'd', 'delete'
-        puts playlist.delete_song
+        puts delete
       when 'q', 'quit'
         puts "\nGoodbye!"; exit 0
       else 
@@ -39,12 +39,85 @@ module Playlist
     end
   end
 
-  def continue? 
-    "\n> Continue? (Y/N)"
-  end
-
   def user_inp 
     gets.chomp.strip.downcase
+  end
+
+  # Fetches and displays current playlist for user 
+  def view
+    list = SongList.list
+
+    unless list.empty?
+      puts "\n— — — — — — — — — — — — — — — — — — — — — — —"
+      puts "|  title  |  artist  |  album  |  date added "
+      puts "— — — — — — — — — — — — — — — — — — — — — — —"
+      list.each do |song| 
+        puts %Q{| "#{song.title}"  |  #{song.artist}  |  #{song.album}  |  #{song.date_added}"}
+      end
+      puts "— — — — — — — — — — — — — — — — — — — — — — —\n"
+      puts "count: #{list.count.to_s} songs in list."
+    else
+      puts "\n[empty]"
+    end
+  end
+
+  # Adds song to playlist using information provided by user
+  def add
+    title=""; artist=""; album=""
+    
+    loop do
+      puts "\n> Title: "
+      title = Playlist.user_inp
+      puts "> Artist: "
+      artist = Playlist.user_inp
+      puts "> Album: "
+      album = Playlist.user_inp
+
+      unless title.empty? || artist.empty?
+        break
+      else
+        puts "\n!! Invalid input; please try again."
+      end
+    end
+
+    exit_code = SongList.add_song(title, artist, album)
+
+    if exit_code == 0
+      puts "\n-- #{add_title} by #{add_artist} added to playlist on #{song.date_added}"
+    elsif exit_code == 1
+      puts "\n[!] Song already exists!"
+    else
+      puts "\n[!] Unknown error occurred"
+    end
+
+  end
+
+  # Removes song from playlist matching details provided by user
+  def delete
+    title=""; artist=""; album=""
+    
+    loop do
+      puts "\n> Title: "
+      title = Playlist.user_inp
+      puts "> Artist: "
+      artist = Playlist.user_inp
+      
+      unless title.empty? || artist.empty?
+        break
+      else
+        puts "\n!! Invalid input; please try again."
+      end
+    end
+    
+    exit_code == SongList.delete_song(title, artist)
+    
+    if exit_code == 0
+      puts "\n-- #{add_title} by #{add_artist} deleted from playlist."
+    elsif exit_code == 1
+      puts "\n[!] Song not found!"
+    else
+      puts "\n[!] Unknown error occurred"
+    end
   end
 
 end

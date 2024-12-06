@@ -9,7 +9,6 @@ class Song
     @artist = artist
     @album = album
     @date_added = Time.now.strftime("%B %d, %Y %H:%M")
-    @date_mod = @date_added
   end
-
+  
 end
