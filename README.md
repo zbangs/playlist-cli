@@ -10,6 +10,7 @@ To run this application:
 2. Open the terminal and navigate to the project directory.  
    e.g. `cd C:/User/path/.../playlist-cli`
 
-4. Install project dependencies using the `bundle install` command.
-5. Run the main application file to get started:  
+4. Install project dependencies:  
+   ```bundle install```
+6. Run the main application file to get started:  
    ```ruby ./playlist.rb```
